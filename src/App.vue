@@ -2,10 +2,10 @@
 <div>
   <div class="container">
       <LoginForm></LoginForm>
-      <Favorite></Favorite>
+      <Favorite></Favorite>      
   </div>
   <div class="container">
-    <Slider></Slider>
+    <Soccer></Soccer>
   </div>
 </div>
 
@@ -14,13 +14,13 @@
 
 import Login from './components/Login.vue'
 import Favorite from './components/Favorite.vue'
-import Slide from './components/Slide.vue'
+import Soccer from './components/Soccer.vue'
 
 export default {
   components:{
     'LoginForm':Login,
     'Favorite': Favorite,
-    'Slider':Slide
+    'Soccer':Soccer
   },
   data(){
     return{
@@ -50,7 +50,7 @@ export default {
     outline: none;
     margin: 10px auto;
     border: 1px solid #ccc;
-    height: 25px;
+    height: 24px;
     width: 300px;
 }
 input:focus{

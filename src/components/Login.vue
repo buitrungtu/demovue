@@ -59,7 +59,7 @@ export default {
 }
 .sign-in{
     padding: 10px;
-    background-color:#f9f9f9;
+    background-color:#f3f3f3;
     height: 100%;
 }
 .sign-in .account-act{

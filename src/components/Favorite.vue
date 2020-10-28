@@ -65,11 +65,13 @@ export default {
 }
 .addHobby{
     position: relative;
+    width: 300px;
+    margin: auto;
 }
 button#btnAdd {
     position: absolute;
     top: 0px;
-    right: 310px;
+    right: -6px;
     border: none;
     background-color: #56c112;
     font-size: 22px;
