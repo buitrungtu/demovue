@@ -1,35 +1,31 @@
 <template>
-<div>
-  <div class="container">
-      <LoginForm></LoginForm>
-      <Favorite></Favorite>      
-  </div>
-  <div class="container">
-    <Soccer></Soccer>
-  </div>
+<div id="my-vue">
+  <Header v-bind:userSelect="userSelect"  v-on:changeTab="handleChangeTab($event)"/>
+  <Content title="Tất cả" v-if="userSelect === 0" />
+  <Content title="Điện thoại" v-else-if="userSelect === 1" />
+  <Content title="Máy tính" v-else-if="userSelect === 2" />
+  <Login />
 </div>
-
 </template>
 <script>
-
-import Login from './components/Login.vue'
-import Favorite from './components/Favorite.vue'
-import Soccer from './components/Soccer.vue'
+import header from './components/header.vue'
+import content from './components/content.vue'
+import login from './components/login.vue'
 
 export default {
   components:{
-    'LoginForm':Login,
-    'Favorite': Favorite,
-    'Soccer':Soccer
+    'Header':header,
+    'Content':content,
+    'Login':login
   },
   data(){
     return{
-     
+      userSelect:0
     }
   },
   methods:{
-    greeting(){
-      return "hey boy!";
+    handleChangeTab(tabNumber){
+      this.userSelect = tabNumber;
     }
   },
   computed:{
@@ -39,21 +35,12 @@ export default {
 </script>
 
 <style>
-  .container{
-    width: 80%;
-    margin: auto;
-    display: flex;
-    margin-top: 20px;
-  }
-  input{
-    display: block;
-    outline: none;
-    margin: 10px auto;
-    border: 1px solid #ccc;
-    height: 24px;
-    width: 300px;
+#my-vue{
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  margin: 0px;
+  padding: 0px;
 }
-input:focus{
-    border-color:#2735d0;
-}
+
+
 </style>
