@@ -16,7 +16,7 @@
 .container{
     width: 80%;
     margin: 20px auto;
-    height: 600px;
+    height: 200px;
     background-color: #fafafa;
 }
 </style>

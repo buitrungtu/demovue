@@ -24,35 +24,57 @@
         </div>
         <div class="account">
             <div class="account-detail" v-if="isSignIn">
-                <p> Xin chào: <span class="user-name"> BTTu </span></p>
-                <p class="log-out">Đăng xuất</p>
-                
+                <p> Xin chào: <span class="user-name"> {{formatUserName}} </span></p>
+                <p class="log-out" v-on:click="btnLogoutOnClick()">Đăng xuất</p>
             </div>
             <div class="account-sign" v-else>
-                <button>Đăng nhập</button>
-                <button>Đăng ký</button>
+                <button v-on:click="btnLoginOnClick(1)">Đăng nhập</button>
+                <button v-on:click="btnLoginOnClick(2)">Đăng ký</button>
             </div>
         </div>
     </div>
+    
 </template>
 
 <script>
+
+import {busData} from '../main.js';
+
     export default {
         props:{
             userSelect:Number
         },
         data(){
             return{
-                isSignIn: false
+                isSignIn: false,
+                userName:""
             }
+        },
+        created(){
+            busData.$on('LoginHasDone',(userName)=>{
+                this.isSignIn = true;
+                this.userName = userName;
+            })
         },
         methods:{
             changeTab(tabNumber){
-                this.$emit('changeTab',tabNumber);
-            },           
+                busData.$emit('changeTab',tabNumber);
+            },
+            btnLoginOnClick(formMode){
+                busData.$emit('loginOnClick',formMode);
+            },      
+            btnLogoutOnClick(){
+                this.userName = "";
+                this.isSignIn = false;
+            }     
         },
         computed:{
-            
+            formatUserName(){
+                if(this.userName.length > 10){
+                    return this.userName.slice(0,10)+ "...";
+                }
+                return this.userName;
+            }
         }
     }
 </script>

@@ -3,26 +3,39 @@
         <div class="black-model"></div>
         <div class="dialog">
             <div class="dialog-name">
-                <div class="title-text">
+                <div class="title-text" v-show="!isSignIn">
+                    <img src="../assets/login.png" class="icon">
                     Đăng nhập
                 </div>
-                <div class="title-button-close"></div>
+                 <div class="title-text" v-show="isSignIn">
+                     <img src="../assets/signin.png" class="icon">
+                    Đăng ký
+                </div>
+                <div class="title-button-close" v-on:click="btnCloseOnClick()"></div>
             </div>
             <div class="dialog-body">
-                <h1 class="dialog-title">Welcome back</h1>
+                <h1 class="dialog-title" v-show="!isSignIn">Welcome back</h1>
+                <h1 class="dialog-title" v-show="isSignIn">Welcome</h1>
                 <div class="row-info">
                     <label>Tên đăng nhập:</label>
-                    <input tabindex="1" type="text" id="userName">
+                    <input tabindex="1" v-model.trim="userName" type="text" id="userName">
                 </div>
                 <div class="row-info">
                     <label>Mật khẩu:</label>
-                    <input tabindex="2" type="text">
+                    <input tabindex="2" v-model.trim="passWord" type="text">
                 </div>
+                <div class="row-info" v-show="isSignIn">
+                    <label>Nhập lại mật khẩu:</label>
+                    <input tabindex="2"  v-model.trim="passWord" type="text">
+                </div>
+               
                 <div class="dialog-btn">
-                    <button tabindex="3">Đăng nhập</button>
+                    <button tabindex="3" v-show="!isSignIn" v-on:click="btnLoginOnClick()">Đăng nhập</button>
+                    <button tabindex="3" v-show="isSignIn" v-on:click="btnLoginOnClick()">Đăng ký</button>
                 </div>
                 <div class="dialog-act">
-                    <a href="#" tabindex="4">Chưa có tài khoản?</a>
+                    <a href="#" tabindex="4" v-show="!isSignIn" v-on:click="btnSignInOnClick()">Chưa có tài khoản?</a>
+                    <a href="#" tabindex="4" v-show="isSignIn" v-on:click="btnSignInOnClick()">Đăng nhập ngay</a>
                 </div>
             </div>
         </div>
@@ -30,16 +43,38 @@
 </template>
 
 <script>
+import {busData} from '../main.js';
     export default {
+        props:{
+            formMode:Number
+        },
         data(){
             return{
-                
+                userName : "",
+                passWord:"",
+                isSignIn:false
             }
         },
         mounted(){
+            if(this.formMode == 1)  this.isSignIn = false;
+            else    this.isSignIn = true;
             var userName = document.getElementById("userName");
             userName.focus();
-            console.log("dsadsadsa");
+        },
+        methods:{
+            btnCloseOnClick(){
+                busData.$emit('closeLoginOnClick');
+            },
+            btnLoginOnClick(){
+                // kiểm tra tính chính xác của tài khoản
+                // cập nhập thông tin cho bên header
+                busData.$emit('LoginHasDone',this.userName);
+                this.btnCloseOnClick();
+            },
+            btnSignInOnClick(){
+                if(this.isSignIn)   return this.isSignIn = false;
+                else    return this.isSignIn = true;
+            }
         }
 
     }
@@ -72,6 +107,11 @@
     color: #fff;
     display: flex;
 }
+.title-text .icon{
+    width: 16px;
+    height: 16px;
+    margin: 0px 2px;
+}
 .title-button-close {
     position: absolute;
     right: 0;
@@ -87,7 +127,7 @@
     background-color: #fff;
 }
 .dialog-body{
-    padding: 5px 10px;
+    padding: 5px 30px;
 }
 .dialog-title{
     text-align: center;
@@ -100,11 +140,12 @@
 }
 .row-info label{
     margin-right: 20px;
-    width: 150px;
+    width: 175px;
+    text-align: center;
 }
 .row-info input{
     outline: none;
-    width: calc(100% - 150px);
+    width: calc(100% - 175px);
     border: 1px solid #ccc;
 }
 .row-info input:focus{

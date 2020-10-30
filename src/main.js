@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false
+export const busData = new Vue();
+
 
 new Vue({
   el:"#app",
