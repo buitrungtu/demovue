@@ -13,13 +13,13 @@
                 </li>
             </ul>
         </div>
-        <div class="cart">
+        <div class="cart" v-on:click="showCartDetail()">
             <button class="btn-cart">
                 Giỏ hàng
                 <img src="../assets/shopping-cart.png" class="icon-cart"/>
             </button>
-            <div class="cart-qlt">
-                5
+            <div class="cart-qlt" v-show="cartQLT > 0">
+                {{cartQLT}}
             </div>
         </div>
         <div class="account">
@@ -47,13 +47,17 @@ import {busData} from '../main.js';
         data(){
             return{
                 isSignIn: false,
-                userName:""
+                userName:"",
+                cartQLT : 0,
             }
         },
         created(){
             busData.$on('LoginHasDone',(userName)=>{
                 this.isSignIn = true;
                 this.userName = userName;
+            })
+            busData.$on('addToCart',()=>{
+                this.cartQLT += 1;
             })
         },
         methods:{
@@ -66,6 +70,9 @@ import {busData} from '../main.js';
             btnLogoutOnClick(){
                 this.userName = "";
                 this.isSignIn = false;
+            },
+            showCartDetail(){
+                busData.$emit('showCartDetail');
             }     
         },
         computed:{
@@ -87,7 +94,7 @@ import {busData} from '../main.js';
     box-sizing: border-box;
     padding: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 .nav{
@@ -114,13 +121,7 @@ import {busData} from '../main.js';
 .cart{
     position: relative;
 }
-button{
-    box-sizing: border-box;
-    padding: 8px 32px;
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-}
+
 .btn-cart{
     background-color: #2d9cdb;
     color: #fff;
@@ -137,14 +138,17 @@ img.icon-cart {
 }
 .cart-qlt{
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 27px;
     background-color: #fff;
     border-radius: 50%;
     top: -10px;
     right: -10px;
     text-align: center;
     cursor: pointer;
+}
+.account-sign {
+    width: 310px;
 }
 .account{
     color: #fff;
@@ -166,5 +170,9 @@ img.icon-cart {
     color: #fff;
     margin-left: 10px;
     border: 1px solid #27ae60;
+}
+.account-sign button:hover,.btn-cart:hover{
+    background-color: #ed9528;
+    border: 1px solid #ed9528;
 }
 </style>

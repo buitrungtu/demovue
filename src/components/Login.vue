@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="black-model"></div>
-        <div class="dialog">
+        <div class="dialog dialog-login">
             <div class="dialog-name">
                 <div class="title-text" v-show="!isSignIn">
                     <img src="../assets/login.png" class="icon">
@@ -30,8 +30,8 @@
                 </div>
                
                 <div class="dialog-btn">
-                    <button tabindex="3" v-show="!isSignIn" v-on:click="btnLoginOnClick()">Đăng nhập</button>
-                    <button tabindex="3" v-show="isSignIn" v-on:click="btnLoginOnClick()">Đăng ký</button>
+                    <button tabindex="3" v-show="!isSignIn" v-on:click="btnLoginOnClick()">  Đăng nhập  </button>
+                    <button tabindex="3" v-show="isSignIn" v-on:click="btnLoginOnClick()">  Đăng ký  </button>
                 </div>
                 <div class="dialog-act">
                     <a href="#" tabindex="4" v-show="!isSignIn" v-on:click="btnSignInOnClick()">Chưa có tài khoản?</a>
@@ -81,57 +81,11 @@ import {busData} from '../main.js';
 </script>
 
 <style scoped>
-.black-model{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.5;
-    background-color: #000;
-}
-.dialog {
-    position: absolute;
-    top: calc(50% - 200px);
+.dialog.dialog-login{
+    top: calc(50% - 180px);
     left: calc(50% - 300px);
     width: 600px;
-    height: 400px;
-    border:6px solid #27ae60;
-    border-top:10px solid #27ae60;
-    border-radius: 5px;
-    background-color: #fff;
-}
-.dialog .dialog-name {
-    height: 30px;
-    background-color: #27ae60;
-    color: #fff;
-    display: flex;
-}
-.title-text .icon{
-    width: 16px;
-    height: 16px;
-    margin: 0px 2px;
-}
-.title-button-close {
-    position: absolute;
-    right: 0;
-    border: 1px solid #ccc;
-    width: 20px;
-    height: 20px;
-    background-image: url('../assets/close.png');
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    background-position: center;
-    cursor: pointer;
-    background-size: cover;
-    background-color: #fff;
-}
-.dialog-body{
-    padding: 5px 30px;
-}
-.dialog-title{
-    text-align: center;
-    color: #27ae60;
+    height: 360px;
 }
 .row-info{
     display: flex;
@@ -159,15 +113,11 @@ import {busData} from '../main.js';
 .dialog-btn button{
     color: #fff;
     background-color: #27ae60;
-    padding: 10px 40px;
-    outline:  none;
     border: 1px solid #27ae60;
-    cursor: pointer;
-    border-radius: 5px;
 }
 .dialog-btn button:hover,.dialog-btn button:focus{
     background-color: #ed9528;
-     border: 1px solid #ed9528;
+    border: 1px solid #ed9528;
 }
 .dialog-act{
     text-align: center;
