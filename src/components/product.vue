@@ -3,14 +3,18 @@
         <div class="product-info">
             <img v-bind:src="product.Image">
             <div class="product-name">
-                <a href="#" title="dsa">{{product.Name}}</a>
+                <a href="#" v-bind:title="product.Name">{{product.Name}}</a>
             </div>
             <div class="product-price">
-                <div class="dumy">Giá: <span class="price" title="">10.000.000 vnđ</span></div>
-                <div class=""> Số lượng: <span class="quality">12</span></div>
+                <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{product.Price}}</span></div>
+                <div class=""> Số lượng: <span class="quality">{{product.Quality}}</span></div>
             </div>
-            <button v-on:click="addToCart()">
+            <button  v-show="!hasInCart" v-on:click="addToCart()">
                 <p>Thêm vào giỏ</p> 
+                <img src="../assets/shopping-cart.png" class="icon"/>
+            </button>
+             <button v-show="hasInCart">
+                <p>Đã có trong giỏ</p> 
                 <img src="../assets/shopping-cart.png" class="icon"/>
             </button>
         </div>
@@ -25,11 +29,17 @@ import {busData} from '../main.js';
             product:Object
         },data(){
             return{
-                quality:0
+                hasInCart:false
             }
         },methods:{
             addToCart(){
-                busData.$emit('addToCart');
+                if(this.product.Quality > 0){
+                    busData.$emit('addToCart');
+                    this.product.Quality--;
+                    //thêm vào cartDetail
+                    this.hasInCart=true;
+                    busData.$emit('addToCartDetail',this.product);
+                }
             }
         },
         computed:{

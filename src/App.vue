@@ -3,7 +3,7 @@
   <Header v-bind:userSelect="userSelect" />
   <Content title="Tất cả" v-bind:userSelect="userSelect" />
   <Login v-if="formLogin" v-bind:formMode="formModeLogin"/>
-  <CartDetail v-if="showCartDetail"/>
+  <CartDetail v-show="showCartDetail"/>
 </div>
 </template>
 <script>
@@ -85,19 +85,21 @@ body::-webkit-scrollbar-thumb{
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.2;
+    opacity: 0.4;
     background-color: #000;
+    z-index: 2;
 }
 .dialog {
     position: fixed;
     top: calc(50% - 300px);
-    left: calc(50% - 400px);
-    width: 800px;
+    left: calc(50% - 350px);
+    width: 700px;
     height: 600px;
     border:6px solid #27ae60;
     border-top:10px solid #27ae60;
     border-radius: 5px;
     background-color: #fff;
+    z-index: 3;
 }
 .dialog .dialog-name {
     height: 30px;
@@ -125,8 +127,8 @@ body::-webkit-scrollbar-thumb{
     background-color: #fff;
 }
 
-.dialog-body{
-    padding: 5px 30px;
+.dialog-body,.dialog-footer{
+    padding: 5px 30px 0px 30px;
 }
 .dialog-title{
     text-align: center;

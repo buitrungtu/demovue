@@ -167,9 +167,9 @@ img.icon-cart {
 }
 .account-sign button{
     background-color: #27ae60;
+    border: 1px solid #27ae60;
     color: #fff;
     margin-left: 10px;
-    border: 1px solid #27ae60;
 }
 .account-sign button:hover,.btn-cart:hover{
     background-color: #ed9528;
