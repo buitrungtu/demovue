@@ -6,14 +6,14 @@
                 <a href="#" v-bind:title="product.Name">{{product.Name}}</a>
             </div>
             <div class="product-price">
-                <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{product.Price}}</span></div>
+                <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{formatMoney}}</span></div>
                 <div class=""> Số lượng: <span class="quality">{{product.Quality}}</span></div>
             </div>
-            <button  v-show="!hasInCart" v-on:click="addToCart()">
+            <button  v-show="product.QualityInCart == 0" v-on:click="addToCart()">
                 <p>Thêm vào giỏ</p> 
                 <img src="../assets/shopping-cart.png" class="icon"/>
             </button>
-             <button v-show="hasInCart">
+             <button class="hasCart" v-show="product.QualityInCart != 0">
                 <p>Đã có trong giỏ</p> 
                 <img src="../assets/shopping-cart.png" class="icon"/>
             </button>
@@ -29,28 +29,29 @@ import {busData} from '../main.js';
             product:Object
         },data(){
             return{
-                hasInCart:false
             }
-        },methods:{
+        }
+        ,methods:{
             addToCart(){
                 if(this.product.Quality > 0){
-                    busData.$emit('addToCart');
                     this.product.Quality--;
                     //thêm vào cartDetail
-                    this.hasInCart=true;
+                    this.product.QualityInCart = 1;
                     busData.$emit('addToCartDetail',this.product);
                 }
             }
         },
         computed:{
-            
+            formatMoney(){
+                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.product.Price);
+            }
         }
     }
 </script>
 
 <style scoped>
 .product{
-    background-color: #f7f3f3;
+    background-color: #cccccc78;
     min-width: 350px;
     min-height: 450px;
     position: relative;
@@ -115,5 +116,8 @@ img.icon {
     background-color: #ea8000;
     border: 1px solid #ea8000;
 }
-
+button.hasCart{
+    background-color: #2d9cdb;
+    border: 1px solid #2d9cdb;
+}
 </style>

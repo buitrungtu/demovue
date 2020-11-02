@@ -13,15 +13,18 @@
                 </li>
             </ul>
         </div>
-        <div class="cart" v-on:click="showCartDetail()">
-            <button class="btn-cart">
-                Giỏ hàng
-                <img src="../assets/shopping-cart.png" class="icon-cart"/>
-            </button>
-            <div class="cart-qlt" v-show="cartQLT > 0">
-                {{cartQLT}}
+        <div class="position-cart">
+            <div class="cart" v-on:click="showCartDetail()">
+                <button class="btn-cart">
+                    Giỏ hàng
+                    <img src="../assets/shopping-cart.png" class="icon-cart"/>
+                </button>
+                <div class="cart-qlt" v-show="cartQLT > 0">
+                    {{cartQLT}}
+                </div>
             </div>
         </div>
+        
         <div class="account">
             <div class="account-detail" v-if="isSignIn">
                 <p> Xin chào: <span class="user-name"> {{formatUserName}} </span></p>
@@ -56,8 +59,8 @@ import {busData} from '../main.js';
                 this.isSignIn = true;
                 this.userName = userName;
             })
-            busData.$on('addToCart',()=>{
-                this.cartQLT += 1;
+            busData.$on('toltalInCart',(lenght)=>{
+                this.cartQLT = lenght;
             })
         },
         methods:{
@@ -96,6 +99,7 @@ import {busData} from '../main.js';
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .nav{
     width: 600px;
@@ -121,7 +125,11 @@ import {busData} from '../main.js';
 .cart{
     position: relative;
 }
-
+.position-cart{
+    position: fixed;
+    top: 85px;
+    right: 15px;
+}
 .btn-cart{
     background-color: #2d9cdb;
     color: #fff;
@@ -139,13 +147,14 @@ img.icon-cart {
 .cart-qlt{
     position: absolute;
     width: 32px;
-    height: 27px;
-    background-color: #fff;
+    height: 28px;
     border-radius: 50%;
     top: -10px;
     right: -10px;
     text-align: center;
     cursor: pointer;
+    background-color: #ff0e07;
+    color: #fff;
 }
 .account-sign {
     width: 310px;

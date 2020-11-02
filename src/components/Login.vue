@@ -11,7 +11,7 @@
                      <img src="../assets/signin.png" class="icon">
                     Đăng ký
                 </div>
-                <div class="title-button-close" v-on:click="btnCloseOnClick()"></div>
+                <div class="title-button-close login" v-on:click="btnCloseOnClick()"></div>
             </div>
             <div class="dialog-body">
                 <h1 class="dialog-title" v-show="!isSignIn">Welcome back</h1>
@@ -60,6 +60,7 @@ import {busData} from '../main.js';
             else    this.isSignIn = true;
             var userName = document.getElementById("userName");
             userName.focus();
+            // $('#userName').focus();
         },
         methods:{
             btnCloseOnClick(){
@@ -86,6 +87,9 @@ import {busData} from '../main.js';
     left: calc(50% - 300px);
     width: 600px;
     height: 360px;
+}
+.title-button-close.login{
+    background-image: url('../assets/close.png');
 }
 .row-info{
     display: flex;

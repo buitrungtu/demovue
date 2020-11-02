@@ -91,10 +91,10 @@ body::-webkit-scrollbar-thumb{
 }
 .dialog {
     position: fixed;
-    top: calc(50% - 300px);
-    left: calc(50% - 350px);
-    width: 700px;
-    height: 600px;
+    top: calc(50% - 350px);
+    left: calc(50% - 400px);
+    width: 800px;
+    height: 700px;
     border:6px solid #27ae60;
     border-top:10px solid #27ae60;
     border-radius: 5px;
@@ -118,7 +118,7 @@ body::-webkit-scrollbar-thumb{
     border: 1px solid #ccc;
     width: 20px;
     height: 20px;
-    background-image: url('./assets/close.png');
+    background-image: url('./assets/close-2.png');
     background-repeat: no-repeat;
     border-radius: 50%;
     background-position: center;

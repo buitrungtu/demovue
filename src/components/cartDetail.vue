@@ -14,8 +14,9 @@
                     <img src="../assets/tiki-cart.png"/>
                 </div>
                 <div class="dialog-content">
-                    <ul class="order-items">
-                        <li class="item item-thead">
+                    <div class="order-items">
+                        <div class="item item-thead">
+                            <div class="image-type">Loại</div>
                             <span class="item-name">Tên sản phẩm</span>
                             <span class="quanlity">
                                 Số lượng
@@ -25,32 +26,33 @@
                             </span>
                             <div class="btn-delete">
                             </div>
-                        </li>
-                        <li v-for="cartItem in cartItems" v-bind:key="cartItem.ProductID" class="item">
+                        </div>
+                        <div v-for="cartItem in cartItems" v-bind:key="cartItem.ProductID" class="item">
+                            <div class="image-type">
+                                <img src="../assets/laptop.png" v-show="cartItem.Type == 1" alt="">
+                                <img src="../assets/smartphone.png" v-show="cartItem.Type == 2" alt="">
+                            </div>
                             <span class="item-name">{{cartItem.Name}}</span>
                             <span class="quanlity">
-                                <button> - </button>
-                                <input type="number" v-bind:value="cartItem.QuanlityCart">
-                                <button> + </button>
+                                <button @click="cartItem.QualityInCart--"> - </button>
+                                <input type="number" min="1" v-model.number="cartItem.QualityInCart">
+                                <button @click="cartItem.QualityInCart++"> + </button>
                             </span>
                             <span class="price">
-                                <span>{{cartItem.Price}}</span>
+                                <span>{{formatPrice(cartItem.Price)}}</span>
                             </span>
-                            <div class="btn-delete">
+                            <div class="btn-delete" v-on:click="deleteItem(cartItem.ProductID)">
                                 <button class="delete-item">X</button>
                             </div>
-                        </li>
-                        
-                        
-                        
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="dialog-footer">
                 <div class="bill">
-                    <p>Thành tiền: <span>  49.400.000 vnđ</span></p>
-                    <p>Thuế (VAT): <span> 600.000 vnđ</span></p>
-                    <p>Tổng tiền: <span> 50.000.000 vnđ</span></p>
+                    <div class="row-bill"><p>Thành tiền:</p> <span>  {{formatSubtoltal}}</span></div>
+                    <div class="row-bill"><p>Thuế (VAT):</p> <span> {{formatVat}}</span></div>
+                    <div class="row-bill"><p>Tổng tiền:</p> <span>  {{formatToltal}}</span></div>
                 </div>
                 <div class="btn-buy">
                     <button>Thanh toán <img src="../assets/dollar.png" /></button>
@@ -67,20 +69,56 @@ import {busData} from '../main.js';
         data(){
             return{
                 cartItems : [],
-
             }
         },
         created(){
             busData.$on('addToCartDetail',(product)=>{
-                product.QuanlityCart = 1;
                 this.cartItems.push(product);
+                busData.$emit('toltalInCart',this.cartItems.length);
             })
+        },
+        beforeUpdate(){
+            busData.$emit('toltalInCart',this.cartItems.length);
         },
         methods:{
             btnCloseOnClick(){
                 busData.$emit('closeLoginOnClick');            
             },
-
+            deleteItem(id){
+                for(let i =0;i<this.cartItems.length;i++){
+                    if(this.cartItems[i].ProductID == id){
+                        this.cartItems[i].QualityInCart = 0;
+                        this.cartItems.splice(i,1);
+                    }
+                }
+            },
+            formatPrice(price){
+                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(price);
+            },
+        },
+        computed:{
+            subtoltal(){
+                let t = 0;
+                for(let i=0;i<this.cartItems.length;i++){
+                    t += this.cartItems[i].QualityInCart * this.cartItems[i].Price;
+                }
+                return t;
+            },
+            vat(){
+                return 0.1*this.subtoltal;
+            },
+            toltal(){
+                return this.vat + this.subtoltal;
+            },
+            formatSubtoltal(){
+                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.subtoltal);
+            },
+            formatVat(){
+                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.vat);
+            },
+            formatToltal(){
+                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.toltal);
+            },
         }
     }
 </script>
@@ -95,7 +133,7 @@ import {busData} from '../main.js';
     background-color: #2d9cdb;
 }
 .dialog-body{
-    height: calc(100% - 150px);
+    height: calc(100% - 200px);
 }
 .logo-tiki{
     text-align: center;
@@ -125,11 +163,23 @@ import {busData} from '../main.js';
 .dialog-footer{
     display: flex;
     width: calc(100% - 60px);
-    height: 100px;
+    height: 160px;
     justify-content: space-between;
 }
-.bill p{
+.bill{
+    width: 450px;
+    margin: auto 0px;
+    padding: 0px 10px;
+    background-color: #ececec;
+}
+.row-bill{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.row-bill p{
     margin: 10px 0px;
+    width: 150px;
 }
 .bill span{
     color: red;
@@ -169,6 +219,17 @@ import {busData} from '../main.js';
 .item.item-thead{
     padding-bottom: 2px;
     color: #2d9cdb;
+}
+.image-type {
+    width: 50px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-type img{
+    width: 100%;
+    height: 100%;
 }
 .item-name{
     width: 230px;
