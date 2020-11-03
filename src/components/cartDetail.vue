@@ -29,14 +29,14 @@
                         </div>
                         <div v-for="cartItem in cartItems" v-bind:key="cartItem.ProductID" class="item">
                             <div class="image-type">
-                                <img src="../assets/laptop.png" v-show="cartItem.Type == 1" alt="">
-                                <img src="../assets/smartphone.png" v-show="cartItem.Type == 2" alt="">
+                                <img src="../assets/laptop.png" v-show="cartItem.Type == 2" alt="">
+                                <img src="../assets/smartphone.png" v-show="cartItem.Type == 1" alt="">
                             </div>
                             <span class="item-name">{{cartItem.Name}}</span>
                             <span class="quanlity">
                                 <button @click="cartItem.QualityInCart--"> - </button>
-                                <input type="number" min="1" v-model.number="cartItem.QualityInCart">
-                                <button @click="cartItem.QualityInCart++"> + </button>
+                                <input type="number" min="1" v-model.number="cartItem.QualityInCart" readonly>
+                                <button @click="plusQuanlity(cartItem)"> + </button>
                             </span>
                             <span class="price">
                                 <span>{{formatPrice(cartItem.Price)}}</span>
@@ -83,6 +83,13 @@ import {busData} from '../main.js';
         methods:{
             btnCloseOnClick(){
                 busData.$emit('closeLoginOnClick');            
+            },
+            plusQuanlity(item){
+                console.log(item.Quality);
+                if(item.Quality > 0){
+                    item.QualityInCart++;
+                    item.Quality--;
+                }
             },
             deleteItem(id){
                 for(let i =0;i<this.cartItems.length;i++){
@@ -226,13 +233,14 @@ import {busData} from '../main.js';
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0px 5px 0px 5px;
 }
 .image-type img{
     width: 100%;
     height: 100%;
 }
 .item-name{
-    width: 230px;
+    width: 250px;
     text-align: center;
 }
 .quanlity{

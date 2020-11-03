@@ -72,10 +72,11 @@ import product from './product.vue'
 <style scoped>
 .container{
     width: 80%;
-    margin: 20px auto;
+    margin: 90px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+
 }
 
 .item-product{

@@ -37,6 +37,7 @@
                     <a href="#" tabindex="4" v-show="!isSignIn" v-on:click="btnSignInOnClick()">Chưa có tài khoản?</a>
                     <a href="#" tabindex="4" v-show="isSignIn" v-on:click="btnSignInOnClick()">Đăng nhập ngay</a>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -44,6 +45,7 @@
 
 <script>
 import {busData} from '../main.js';
+import $ from 'jquery'
     export default {
         props:{
             formMode:Number
@@ -58,9 +60,7 @@ import {busData} from '../main.js';
         mounted(){
             if(this.formMode == 1)  this.isSignIn = false;
             else    this.isSignIn = true;
-            var userName = document.getElementById("userName");
-            userName.focus();
-            // $('#userName').focus();
+            $('#userName').focus();
         },
         methods:{
             btnCloseOnClick(){

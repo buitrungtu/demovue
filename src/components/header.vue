@@ -99,7 +99,9 @@ import {busData} from '../main.js';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: fixed;
+    top: 0;
+    z-index: 1;
 }
 .nav{
     width: 600px;
@@ -114,9 +116,8 @@ import {busData} from '../main.js';
     padding: 0 20px 10px 20px;
     border-bottom:3px solid transparent;
 }
-.active{
-    border-bottom-color:#27ae60;
-}
+.link.active{border-bottom-color:#27ae60;}
+.link.active a{color: #27ae60;}
 .link a{
     color: #fff;
     text-decoration: none;
@@ -129,6 +130,7 @@ import {busData} from '../main.js';
     position: fixed;
     top: 85px;
     right: 15px;
+    z-index: 2;
 }
 .btn-cart{
     background-color: #2d9cdb;
