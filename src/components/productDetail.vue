@@ -1,43 +1,36 @@
 <template>
     <div class="product-detail">
         <div class="history">
-            <a href="#">Product</a> > Iphone 12 RED
+            <a href="#/">Product</a> > {{product.Name}}
         </div>
         <div class="product-info">
             <div class="left">
-                <img src="../assets/mac-air.jpg">
+                <img v-bind:src="product.Image">
             </div>
             <div class="right">
                 <div class="product-name">
-                    <h1>Iphone 12 64gb</h1>
+                    <h1>{{product.Name}}</h1>
                 </div>
                 <div class="product-row">
-                    <span> Giá:</span> 6.000.000 đ
+                    <span> Giá:</span> {{product.Price | formatMoney}}
                 </div>
                 <div class="product-row">
-                    <span> Số lượng còn:</span> 10 
+                    <span> Số lượng còn:</span> {{product.Quality}}
                 </div>
                 <div class="product-row">
-                   <span> CPU:</span> 1.4GHz quad-core 
+                   <span> CPU:</span> {{product.CPU}}
                 </div>
                 <div class="product-row">
-                    <span> RAM:</span> 8 GB 
+                    <span> RAM:</span> {{product.RAM}} 
                 </div>
                 <div class="product-row">
-                    <span> VGA:</span> Intel Iris Plus Graphics 645 
+                    <span> VGA:</span> {{product.VGA}}
                 </div>
-                  <div class="product-row">
-                    <span> Ổ cứng:</span> 256GB SSD 
+                <div class="product-row">
+                    <span> Ổ cứng:</span> {{product.HardDrive}}
                 </div>
-                <div class="product-color">
-                    <span>Màu sắc:</span>
-                    <div class="color">
-                        <div class="color-name">Màu đỏ</div>
-                        <div class="color-select">
-                            <img class="active" src="../assets/mac-air.jpg" alt="">
-                            <img src="../assets/mac-air.jpg" alt="">
-                        </div>
-                    </div>
+                <div class="product-row">
+                    <span> Màu sắc:</span> {{product.Color}}
                 </div>
                 <div class="btn-add-cart">
                     <button>
@@ -51,17 +44,21 @@
 </template>
 
 <script>
-    export default {
-        
+    export default {   
+        data(){
+            return{
+                product:null
+            }
+        },
+        created(){
+            this.product = this.$route.params.data
+        }
     }
 </script>
 
 <style scoped>
 
-.product-info{
-    margin-top:20px;
-    display: flex;
-}
+
 .history{
     height: 35px;
     width: calc(100% - 5px);
@@ -74,9 +71,15 @@
     color: #2d9cdb;
     padding-left: 10px;
 }
+.product-info{
+    margin-top:20px;
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 235px);
+}
 .left{
     width: 500px;
-    height: 530px;
+    height: 100%;
 }
 .left img{
     width: 100%;
@@ -85,7 +88,7 @@
 .right{
     margin-left: 20px;
     width: calc(100% - 520px);
-    height: 530px;
+    height: 100%;
     background-color: #efefef75;
     padding: 0px 50px;
 }
@@ -107,30 +110,9 @@
     display: inline-block;
     color: #2d9cdb;
 }
-.product-color{
-    display: flex;
-}
-.product-color span{
-    color: #2d9cdb;
-}
-.color{
-    margin-left: 77px;
-}
-.color-select{
-    display: flex;
-    align-items: center;
-}
-.color-select img{
-    cursor: pointer;
-    width: 100px;
-    height: 100px;
-    margin:20px 20px 0px 0px;
-}
-img.active{
-    border: 2px solid #c71010
-}
+
+
 .btn-add-cart{
-    margin-top:20px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -149,7 +131,7 @@ img.active{
     align-items: center;
 }
 .btn-add-cart button:hover{
-     background-color: #2d9cdb;
+    background-color: #2d9cdb;
     border: 1px solid #2d9cdb;
 }
 </style>

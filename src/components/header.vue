@@ -6,7 +6,7 @@
                     <a href="#/" class="link-item">Tất cả</a>
                 </li>
                  <li class="link" v-bind:class="{active:userSelect == 1}" v-on:click="changeTab(1)">
-                    <a href="#/" class="link-item"  >Điện thoại</a>
+                    <a href="#/" class="link-item">Điện thoại</a>
                 </li>
                  <li class="link" v-bind:class="{active:userSelect == 2}" v-on:click="changeTab(2)">
                     <a href="#/" class="link-item" >Máy tính</a>
@@ -44,14 +44,12 @@
 import {busData} from '../main.js';
 
     export default {
-        props:{
-            userSelect:Number
-        },
         data(){
             return{
                 isSignIn: false,
                 userName:"",
                 cartQLT : 0,
+                userSelect:0,
             }
         },
         created(){
@@ -65,7 +63,9 @@ import {busData} from '../main.js';
         },
         methods:{
             changeTab(tabNumber){
-                busData.$emit('changeTab',tabNumber);
+                this.userSelect = tabNumber;
+                busData.$emit('changeTab',this.userSelect);
+                // this.$router.push({name:"home",params:{:this.userSelect}});
             },
             btnLoginOnClick(formMode){
                 busData.$emit('loginOnClick',formMode);

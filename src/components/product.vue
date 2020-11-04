@@ -1,14 +1,14 @@
 <template>
     <div class="product">
         <div class="product-info">
-            <a href="#/productdetail">
+            <a href="#" @click="gotoProductDetail()">
                 <img v-bind:src="product.Image">
                 <div class="product-name">
                     <p v-bind:title="product.Name">{{product.Name}}</p>
                 </div>
             </a>
             <div class="product-price">
-                <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{formatMoney}}</span></div>
+                <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{product.Price | formatMoney}}</span></div>
                 <div class=""> Số lượng: <span class="quality">{{product.Quality}}</span></div>
             </div>
             <button  v-show="product.QualityInCart == 0" v-on:click="addToCart()">
@@ -41,12 +41,13 @@ import {busData} from '../main.js';
                     this.product.QualityInCart = 1;
                     busData.$emit('addToCartDetail',this.product);
                 }
+            },
+            gotoProductDetail(){
+                this.$router.push({name:"productdetail",params:{data:this.product}});
             }
         },
         computed:{
-            formatMoney(){
-                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.product.Price);
-            }
+            
         }
     }
 </script>

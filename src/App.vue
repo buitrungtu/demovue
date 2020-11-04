@@ -1,6 +1,6 @@
 <template>
 <div id="my-vue">
-  <Header v-bind:userSelect="userSelect" />
+  <Header/>
   <Login v-if="formLogin" v-bind:formMode="formModeLogin"/>
   <CartDetail v-show="showCartDetail"/>
   <div class="container">
@@ -27,17 +27,12 @@ export default {
   },
   data(){
     return{
-      userSelect:0,
       formLogin:false,
       formModeLogin:1,
       showCartDetail: false
     }
   },
   created(){
-    // xử lý việc thay đổi tab
-    busData.$on('changeTab',(tabNumber)=>{
-      this.userSelect = tabNumber;
-    }),
     // hiện form đăng nhập
     busData.$on('loginOnClick',(formMode)=>{
       this.formModeLogin = formMode;

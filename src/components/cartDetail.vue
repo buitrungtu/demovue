@@ -39,7 +39,7 @@
                                 <button @click="plusQuanlity(cartItem)"> + </button>
                             </span>
                             <span class="price">
-                                <span>{{formatPrice(cartItem.Price)}}</span>
+                                <span>{{cartItem.Price | formatMoney}}</span>
                             </span>
                             <div class="btn-delete" v-on:click="deleteItem(cartItem.ProductID)">
                                 <button class="delete-item">X</button>
@@ -50,9 +50,9 @@
             </div>
             <div class="dialog-footer">
                 <div class="bill">
-                    <div class="row-bill"><p>Thành tiền:</p> <span>  {{formatSubtoltal}}</span></div>
-                    <div class="row-bill"><p>Thuế (VAT):</p> <span> {{formatVat}}</span></div>
-                    <div class="row-bill"><p>Tổng tiền:</p> <span>  {{formatToltal}}</span></div>
+                    <div class="row-bill"><p>Thành tiền:</p> <span>  {{subtoltal | formatMoney}}</span></div>
+                    <div class="row-bill"><p>Thuế (VAT):</p> <span> {{vat | formatMoney}}</span></div>
+                    <div class="row-bill"><p>Tổng tiền:</p> <span>  {{toltal | formatMoney}}</span></div>
                 </div>
                 <div class="btn-buy">
                     <button>Thanh toán <img src="../assets/dollar.png" /></button>
@@ -99,9 +99,7 @@ import {busData} from '../main.js';
                     }
                 }
             },
-            formatPrice(price){
-                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(price);
-            },
+           
         },
         computed:{
             subtoltal(){
@@ -116,15 +114,6 @@ import {busData} from '../main.js';
             },
             toltal(){
                 return this.vat + this.subtoltal;
-            },
-            formatSubtoltal(){
-                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.subtoltal);
-            },
-            formatVat(){
-                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.vat);
-            },
-            formatToltal(){
-                return new Intl.NumberFormat('de-DE',{style:'currency',currency:'VND'}).format(this.toltal);
             },
         }
     }
