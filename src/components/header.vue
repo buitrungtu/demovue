@@ -129,7 +129,7 @@ import {busData} from '../main.js';
 .position-cart{
     position: fixed;
     top: 85px;
-    right: 15px;
+    right: 18px;
     z-index: 2;
 }
 .btn-cart{

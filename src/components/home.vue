@@ -1,33 +1,29 @@
 <template>
 <div id="my-vue">
   <Header v-bind:userSelect="userSelect" />
+  <Content title="Tất cả" v-bind:userSelect="userSelect" />
   <Login v-if="formLogin" v-bind:formMode="formModeLogin"/>
   <CartDetail v-show="showCartDetail"/>
-  <div class="container">
-      <router-view />
-  </div>
-  <!-- <Content v-bind:userSelect="userSelect" /> -->
-
 </div>
 </template>
 <script>
 
-import header from './components/header.vue'
-// import content from './components/content.vue'
-import login from './components/Login.vue'
-import cartDetail from './components/cartDetail.vue'
-import {busData} from './main.js';
+import header from './header.vue'
+import content from './content.vue'
+import login from './Login.vue'
+import cartDetail from './cartDetail.vue'
+import {busData} from '../main.js';
 
 export default {
   components:{
     'Header':header,
-    // 'Content':content,
+    'Content':content,
     'Login':login,
     'CartDetail':cartDetail
   },
   data(){
     return{
-      userSelect:0,
+      userSelect:0, 
       formLogin:false,
       formModeLogin:1,
       showCartDetail: false
@@ -62,10 +58,6 @@ export default {
 </script>
 
 <style>
-.container{
-    width: 80%;
-    margin: 90px auto;
-}
 #my-vue{
   font-family: 'Lato', sans-serif;
   font-size: 20px;
@@ -126,7 +118,7 @@ body::-webkit-scrollbar-thumb{
     border: 1px solid #ccc;
     width: 20px;
     height: 20px;
-    background-image: url('./assets/close-2.png');
+    background-image: url('../assets/close-2.png');
     background-repeat: no-repeat;
     border-radius: 50%;
     background-position: center;

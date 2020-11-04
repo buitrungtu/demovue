@@ -1,10 +1,12 @@
 <template>
     <div class="product">
         <div class="product-info">
-            <img v-bind:src="product.Image">
-            <div class="product-name">
-                <a href="#" v-bind:title="product.Name">{{product.Name}}</a>
-            </div>
+            <a href="#/productdetail">
+                <img v-bind:src="product.Image">
+                <div class="product-name">
+                    <p v-bind:title="product.Name">{{product.Name}}</p>
+                </div>
+            </a>
             <div class="product-price">
                 <div class="dumy">Giá: <span class="price" v-bind:title="product.Price">{{formatMoney}}</span></div>
                 <div class=""> Số lượng: <span class="quality">{{product.Quality}}</span></div>
@@ -55,12 +57,13 @@ import {busData} from '../main.js';
     min-width: 350px;
     min-height: 450px;
     position: relative;
-    cursor: pointer;
 }
 .product-info{
     padding: 10px;
 }
-
+.product-info a{
+    text-decoration: none;
+}
 .product-info img{
     width: 100%;
     height: 320px;
@@ -73,15 +76,15 @@ img.icon {
     margin-left: 8px;
     height: 20px;
 }
-.product-name a{
+.product-name p{
     text-align: center;
-    text-decoration: none;
     display: inherit;
     color: #2b2a2a;
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; 
+    margin: 5px 0px;
 } 
 .product-price{
     display: flex;
