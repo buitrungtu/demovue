@@ -4,16 +4,20 @@
   <Login v-if="formLogin" v-bind:formMode="formModeLogin"/>
   <CartDetail v-show="showCartDetail"/>
   <div class="container">
+    <keep-alive include="ListProduct">
       <router-view />
+    </keep-alive>
+
+    
   </div>
-  <!-- <Content v-bind:userSelect="userSelect" /> -->
+  <!-- <ListProduct/> -->
 
 </div>
 </template>
 <script>
 
 import header from './components/header.vue'
-// import content from './components/content.vue'
+// import listProduct from './components/listProduct.vue'
 import login from './components/Login.vue'
 import cartDetail from './components/cartDetail.vue'
 import {busData} from './main.js';
@@ -21,7 +25,7 @@ import {busData} from './main.js';
 export default {
   components:{
     'Header':header,
-    // 'Content':content,
+    // 'ListProduct':listProduct,
     'Login':login,
     'CartDetail':cartDetail
   },

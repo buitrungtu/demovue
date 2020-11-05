@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-       <Product class="item-product" v-for="product in listProductsHasFilt" v-bind:key="product.ProductID" v-bind:product="product"/>
+       <Product class="item-product" v-for="product in listProductsHasFilt" v-bind:key="product.ProductID" v-bind:product="product" v-bind:listProduct="getListProductByCategory(product.Type)"/>
     </div>
 </template>
 
@@ -8,14 +8,25 @@
 import { busData } from '../main'
 import product from './product.vue'
     export default {
+        name:'ListProduct',
         components:{
             'Product':product,
         },
         created(){
             busData.$on('changeTab',(userSelect)=>{
                 this.userSelect = userSelect;
-                console.log(this.userSelect);
             })
+            this.userSelect = this.$route.params.tab;
+        },
+        watch:{
+            userSelect:function(value){
+                console.log(value);
+            }
+        },
+        beforeMount(){
+            if(!this.userSelect){
+                this.userSelect = 0;
+            }
         },
         data(){
             return{
@@ -23,7 +34,7 @@ import product from './product.vue'
                 listProducts:[
                     {ProductID:1,Name: "Iphone 12 64GB",Image:require("../assets/iphone12.jpg"),
                     Price:19900000,QualityInCart:0,CPU:'Qualcomm Snapdragon',RAM:'8 GB',VGA:'Không',HardDrive:"64GB",
-                    Quality:12,Type:1,Color:'Đỏ'},
+                    Quality:12,Type:1,Color:'Đen'},
                     {ProductID:7,Name: "Macbook Air 2017",Image:require("../assets/mac-air.jpg"),
                     Price:27000000,QualityInCart:0,CPU:'1.4GHz quad-core',RAM:'12 GB',VGA:'Intel Iris Plus Graphics 645',HardDrive:"256GB SSD",
                     Quality:2,Type:2,Color:'Xám'},
@@ -58,6 +69,11 @@ import product from './product.vue'
                     Price:16000000,QualityInCart:0,CPU:'Qualcomm Snapdragon',RAM:'8 GB',VGA:'Không',HardDrive:'128GB SSD 500GB HDD',
                     Quality:7,Type:2,Color:'Xám'},
                 ],
+            }
+        },
+        methods:{
+            getListProductByCategory(type){
+                return this.listProducts.filter(x => x.Type == type);
             }
         },
         computed:{

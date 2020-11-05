@@ -33,63 +33,129 @@
                     <span> Màu sắc:</span> {{product.Color}}
                 </div>
                 <div class="btn-add-cart">
-                    <button>
+                    <button  v-show="product.QualityInCart == 0" v-on:click="addToCart()">
                         <p>Thêm vào giỏ</p> 
-                        <img src="../assets/shopping-cart.png" class="icon"/>   
+                        <img src="../assets/shopping-cart.png" class="icon"/>
+                    </button>
+                    <button class="hasCart" v-show="product.QualityInCart != 0">
+                        <p>Đã có trong giỏ</p> 
+                        <img src="../assets/shopping-cart.png" class="icon"/>
                     </button>
                 </div>
             </div>
+        </div>
+        <div class="history">
+            <a href="#/">Liên quan</a>
+        </div>
+
+        <div class="slider">
+            <a href="#" @click="changeProductDetail(item)" class="img-slide" v-for="item in recommend" v-bind:key="item.ProductID">
+                <img v-bind:src="item.Image" alt="">
+                <div class="product-name">
+                    {{item.Name}}
+                </div>
+            </a>
         </div>
     </div>
 </template>
 
 <script>
+import {busData} from '../main.js';
     export default {   
         data(){
             return{
-                product:null
+                product:null,
+                listProduct:null
             }
         },
         created(){
-            this.product = this.$route.params.data
+            this.product = this.$route.params.product;
+            this.listProduct = this.$route.params.listProduct;
+        },
+        
+        methods:{
+            addToCart(){
+                if(this.product.Quality > 0){
+                    this.product.Quality--;
+                    //thêm vào cartDetail
+                    this.product.QualityInCart = 1;
+                    busData.$emit('addToCartDetail',this.product);
+                }
+            },
+            changeProductDetail(item){
+                this.product = item
+            }
+        },
+        computed:{
+            recommend(){
+                return this.listProduct.filter(x=>x.ProductID != this.product.ProductID);
+            }
         }
     }
 </script>
 
 <style scoped>
 
-
+.product-detail{
+    width: 100%;
+    height: caclc(100vh - 90px);
+}
 .history{
     height: 35px;
     width: calc(100% - 5px);
     background-color: #e8efebb8;
     line-height: 32px;
     border-left: 5px solid #2d9cdb;
+    margin-bottom: 10px;
 }
 .history a{
     text-decoration: none;
     color: #2d9cdb;
     padding-left: 10px;
 }
+
+.slider{
+    width: 100%;
+    height: 200px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+}
+.img-slide{
+    width: 250px;
+    height: 100%;
+    text-decoration: none;
+}
+.img-slide img{
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+.img-slide .product-name{
+    text-align: center;
+    color: #000;
+}
 .product-info{
-    margin-top:20px;
+    margin:20px 0px;
     display: flex;
     width: 100%;
-    height: calc(100vh - 235px);
 }
+
 .left{
     width: 500px;
     height: 100%;
 }
 .left img{
+    padding-top: 15px;
     width: 100%;
-    height: 100%;
+    height: 400px;
 }
 .right{
     margin-left: 20px;
     width: calc(100% - 520px);
-    height: 100%;
-    background-color: #efefef75;
+    height: 95%;
+    background-color: #fff;
     padding: 0px 50px;
 }
 .product-name{
@@ -110,8 +176,6 @@
     display: inline-block;
     color: #2d9cdb;
 }
-
-
 .btn-add-cart{
     width: 100%;
     display: flex;
@@ -131,6 +195,10 @@
     align-items: center;
 }
 .btn-add-cart button:hover{
+    background-color: #2d9cdb;
+    border: 1px solid #2d9cdb;
+}
+.btn-add-cart .hasCart{
     background-color: #2d9cdb;
     border: 1px solid #2d9cdb;
 }

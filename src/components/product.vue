@@ -1,7 +1,7 @@
 <template>
     <div class="product">
         <div class="product-info">
-            <a href="#" @click="gotoProductDetail()">
+            <a href="#/productdetail" @click="gotoProductDetail()">
                 <img v-bind:src="product.Image">
                 <div class="product-name">
                     <p v-bind:title="product.Name">{{product.Name}}</p>
@@ -28,7 +28,8 @@ import {busData} from '../main.js';
 
     export default {
         props:{
-            product:Object
+            product:Object,
+            listProduct: Array,
         },data(){
             return{
             }
@@ -37,13 +38,12 @@ import {busData} from '../main.js';
             addToCart(){
                 if(this.product.Quality > 0){
                     this.product.Quality--;
-                    //thêm vào cartDetail
                     this.product.QualityInCart = 1;
                     busData.$emit('addToCartDetail',this.product);
                 }
             },
             gotoProductDetail(){
-                this.$router.push({name:"productdetail",params:{data:this.product}});
+                this.$router.push({name:"productdetail",params:{product:this.product,listProduct:this.listProduct}});
             }
         },
         computed:{

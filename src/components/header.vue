@@ -65,7 +65,7 @@ import {busData} from '../main.js';
             changeTab(tabNumber){
                 this.userSelect = tabNumber;
                 busData.$emit('changeTab',this.userSelect);
-                // this.$router.push({name:"home",params:{:this.userSelect}});
+                this.$router.push({name:"home",params:{tab:this.userSelect}});
             },
             btnLoginOnClick(formMode){
                 busData.$emit('loginOnClick',formMode);
