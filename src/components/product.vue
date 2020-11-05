@@ -116,7 +116,7 @@ img.icon {
     justify-content: center;
     align-items: center;
 }
-.product-info button:hover{
+.product-info button:hover:not(.hasCart){
     background-color: #ea8000;
     border: 1px solid #ea8000;
 }

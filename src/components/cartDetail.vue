@@ -94,6 +94,7 @@ import {busData} from '../main.js';
             deleteItem(id){
                 for(let i =0;i<this.cartItems.length;i++){
                     if(this.cartItems[i].ProductID == id){
+                        this.cartItems[i].Quality += this.cartItems[i].QualityInCart;
                         this.cartItems[i].QualityInCart = 0;
                         this.cartItems.splice(i,1);
                     }
